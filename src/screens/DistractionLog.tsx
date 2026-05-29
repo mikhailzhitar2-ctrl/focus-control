@@ -97,7 +97,7 @@ export default function DistractionLog({ navigate, refresh }: NavProps) {
         </button>
 
         <div className="text-[10px] tracking-[0.3em] text-red-600 uppercase mb-3">
-          Distraction Log
+          Журнал срывов
         </div>
         <h1 className="text-3xl font-bold text-white mb-2">Я отвлекся</h1>
         <p className="text-sm text-gray-500 mb-7">Сколько длился залип?</p>
@@ -119,7 +119,7 @@ export default function DistractionLog({ navigate, refresh }: NavProps) {
                   <div className="text-xs text-gray-600 mt-0.5">{d.desc}</div>
                 </div>
                 <div className="text-xs text-red-800 font-medium">
-                  {DISTRACTION_ENERGY[d.minutes]} energy
+                  {DISTRACTION_ENERGY[d.minutes]} энергии
                 </div>
               </div>
             </button>

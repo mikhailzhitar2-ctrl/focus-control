@@ -42,9 +42,9 @@ export default function AICoach({ navigate }: NavProps) {
         </button>
 
         <div className="text-[10px] tracking-[0.3em] text-emerald-500 uppercase mb-3">
-          Rule-based Coach
+          Коуч на правилах
         </div>
-        <h1 className="text-3xl font-bold text-white mb-2">AI Coach</h1>
+        <h1 className="text-3xl font-bold text-white mb-2">Коуч</h1>
         <p className="text-sm text-gray-600 mb-7">
           На основе твоих данных сегодня
         </p>
@@ -55,7 +55,7 @@ export default function AICoach({ navigate }: NavProps) {
           <div className="grid grid-cols-3 gap-2 text-center">
             <div>
               <div className="text-lg font-bold text-white">{user.energy}</div>
-              <div className="text-[10px] text-gray-600">Energy</div>
+              <div className="text-[10px] text-gray-600">Энергия</div>
             </div>
             <div>
               <div className="text-lg font-bold text-white">{stats.distractionCount}</div>
@@ -82,7 +82,7 @@ export default function AICoach({ navigate }: NavProps) {
               onClick={() => navigate('coach-export')}
               className="text-emerald-700 hover:text-emerald-600 underline transition-colors"
             >
-              Send progress to AI Coach
+              Отправить прогресс коучу
             </button>
             {' '}и передай данные наставнику.
           </p>

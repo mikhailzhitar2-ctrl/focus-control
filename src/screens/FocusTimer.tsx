@@ -117,7 +117,7 @@ export default function FocusTimer({ navigate, refresh }: NavProps) {
               ← Назад
             </button>
             <div className="text-[10px] tracking-[0.3em] text-emerald-500 uppercase mb-3">
-              Focus Session
+              Фокус-сессия
             </div>
             <h1 className="text-3xl font-bold text-white mb-8">Выбери длину</h1>
             <div className="space-y-3">
@@ -133,8 +133,8 @@ export default function FocusTimer({ navigate, refresh }: NavProps) {
                       <div className="text-xs text-gray-600 mt-0.5">{d.desc}</div>
                     </div>
                     <div className="text-right text-xs text-gray-600">
-                      <div className="text-emerald-600">+{FOCUS_REWARDS[d.minutes].xp} XP</div>
-                      <div>+{FOCUS_REWARDS[d.minutes].energy} energy</div>
+                      <div className="text-emerald-600">+{FOCUS_REWARDS[d.minutes].xp} опыта</div>
+                      <div>+{FOCUS_REWARDS[d.minutes].energy} энергии</div>
                     </div>
                   </div>
                 </button>
@@ -147,7 +147,7 @@ export default function FocusTimer({ navigate, refresh }: NavProps) {
         {phase === 'running' && (
           <div className="text-center animate-fadeIn">
             <div className="text-[10px] tracking-[0.3em] text-emerald-500 uppercase mb-8">
-              В фокусе
+              В фокусе · Focus Control
             </div>
 
             {/* Circle progress */}
@@ -210,11 +210,11 @@ export default function FocusTimer({ navigate, refresh }: NavProps) {
             <div className="grid grid-cols-2 gap-3 mb-8">
               <div className="bg-[#111] border border-[#1a1a1a] rounded-xl py-3 px-4">
                 <div className="text-emerald-400 text-xl font-bold">+{reward.xp}</div>
-                <div className="text-xs text-gray-600">XP</div>
+                <div className="text-xs text-gray-600">Опыт</div>
               </div>
               <div className="bg-[#111] border border-[#1a1a1a] rounded-xl py-3 px-4">
                 <div className="text-emerald-400 text-xl font-bold">+{reward.energy}</div>
-                <div className="text-xs text-gray-600">Energy</div>
+                <div className="text-xs text-gray-600">Энергия</div>
               </div>
             </div>
 

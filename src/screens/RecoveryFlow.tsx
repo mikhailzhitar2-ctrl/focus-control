@@ -185,11 +185,11 @@ export default function RecoveryFlow({ navigate, refresh }: NavProps) {
             <div className="grid grid-cols-2 gap-3 mb-8">
               <div className="bg-[#111] border border-[#1a1a1a] rounded-xl py-3 px-4">
                 <div className="text-emerald-400 text-xl font-bold">+10</div>
-                <div className="text-xs text-gray-600">XP</div>
+                <div className="text-xs text-gray-600">Опыт</div>
               </div>
               <div className="bg-[#111] border border-[#1a1a1a] rounded-xl py-3 px-4">
                 <div className="text-emerald-400 text-xl font-bold">+5</div>
-                <div className="text-xs text-gray-600">Energy</div>
+                <div className="text-xs text-gray-600">Энергия</div>
               </div>
             </div>
 

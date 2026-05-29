@@ -36,9 +36,9 @@ export default function CoachExport({ navigate }: NavProps) {
         </button>
 
         <div className="text-[10px] tracking-[0.3em] text-emerald-500 uppercase mb-3">
-          Data Export
+          Экспорт данных
         </div>
-        <h1 className="text-2xl font-bold text-white mb-2">Send to AI Coach</h1>
+        <h1 className="text-2xl font-bold text-white mb-2">Отправить коучу</h1>
         <p className="text-sm text-gray-500 mb-6 leading-relaxed">
           Отправь эти данные наставнику, чтобы получить персональный разбор.
         </p>
@@ -59,7 +59,7 @@ export default function CoachExport({ navigate }: NavProps) {
               : 'bg-[#111] border border-[#222] hover:border-[#333] text-white'
           }`}
         >
-          {copied ? 'Скопировано' : 'Copy JSON'}
+          {copied ? 'Скопировано' : 'Скопировать JSON'}
         </button>
 
         <div className="bg-[#111] border border-[#1a1a1a] rounded-xl p-4">
@@ -71,7 +71,7 @@ export default function CoachExport({ navigate }: NavProps) {
             <li>· Статистика за сегодня и историю</li>
             <li>· Все срывы и recovery</li>
             <li>· Фокус-сессии</li>
-            <li>· XP, CSI, Energy, Streak</li>
+            <li>· Опыт, ИКС, Энергия, Серия</li>
           </ul>
         </div>
       </div>

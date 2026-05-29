@@ -52,7 +52,7 @@ export default function Analytics({ navigate }: NavProps) {
         </button>
 
         <div className="text-[10px] tracking-[0.3em] text-emerald-500 uppercase mb-3">
-          Analytics
+          Аналитика
         </div>
         <h1 className="text-3xl font-bold text-white mb-7">Аналитика</h1>
 
@@ -113,7 +113,7 @@ export default function Analytics({ navigate }: NavProps) {
         {/* Totals */}
         <div className="bg-[#111] border border-[#1a1a1a] rounded-2xl p-5 mt-4">
           <div className="text-[10px] text-gray-600 uppercase tracking-wider mb-3">Всего</div>
-          <StatRow label="XP накоплено" value={user.xp} />
+          <StatRow label="Опыт накоплен" value={user.xp} />
           <StatRow label="Streak" value={`${user.streak} дн.`} />
           <StatRow
             label="Дней в приложении"

@@ -13,7 +13,6 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
   const [user, setUserState] = useState(getUser()!);
   const [stats, setStats] = useState(getTodayStats());
 
-  // Streak update on mount
   useEffect(() => {
     const today = new Date().toISOString().split('T')[0];
     if (user.lastActiveDate !== today) {
@@ -59,20 +58,20 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
             <h1 className="text-2xl font-bold text-white">{user.name}</h1>
             <div className="flex items-center gap-3 mt-1">
               <span className="text-xs text-gray-600">
-                Streak{' '}
+                Серия{' '}
                 <span className="text-emerald-500 font-semibold">{user.streak}</span>
                 {' '}дн.
               </span>
               <span className="text-[#222]">·</span>
               <span className="text-xs text-gray-600">
-                XP{' '}
+                Опыт{' '}
                 <span className="text-white font-semibold">{user.xp}</span>
               </span>
             </div>
           </div>
           <div className="text-right">
             <div className={`text-3xl font-bold ${csiColor}`}>{user.csi}</div>
-            <div className="text-[10px] text-gray-600 uppercase tracking-wider mt-0.5">CSI</div>
+            <div className="text-[10px] text-gray-600 uppercase tracking-wider mt-0.5">ИКС</div>
           </div>
         </div>
       </div>
@@ -82,7 +81,7 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-[#111] border border-[#1a1a1a] rounded-2xl p-4">
             <div className="text-[10px] text-gray-600 uppercase tracking-wider mb-2">
-              Mental Energy
+              Ментальная энергия
             </div>
             <div className={`text-3xl font-bold ${energyColor}`}>{user.energy}</div>
             <div className="w-full bg-[#1e1e1e] rounded-full h-1 mt-2.5">
@@ -138,7 +137,7 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
             }`}
           >
             <div className="text-[10px] text-gray-600 uppercase tracking-wider mb-1.5">
-              AI Coach
+              Коуч
             </div>
             <p className="text-sm text-gray-300 leading-relaxed">{topTip.text}</p>
             {tips.length > 1 && (
@@ -161,7 +160,7 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
             Начать сессию
           </div>
           <div className="text-lg font-semibold group-hover:translate-x-0.5 transition-transform">
-            Start Focus →
+            Запустить фокус →
           </div>
         </button>
 
@@ -199,7 +198,7 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
             onClick={() => navigate('ai-coach')}
             className="bg-[#111] border border-[#1a1a1a] hover:border-[#2a2a2a] text-gray-400 rounded-xl py-3 transition-colors text-xs font-medium"
           >
-            Coach
+            Коуч
           </button>
         </div>
 
@@ -208,7 +207,7 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
           onClick={() => navigate('coach-export')}
           className="w-full border border-dashed border-[#222] hover:border-[#333] text-gray-600 hover:text-gray-500 rounded-xl py-3 transition-colors text-xs"
         >
-          Send progress to AI Coach
+          Отправить прогресс коучу
         </button>
       </div>
     </div>

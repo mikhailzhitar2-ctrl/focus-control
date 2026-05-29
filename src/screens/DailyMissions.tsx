@@ -31,7 +31,7 @@ export default function DailyMissions({ navigate }: NavProps) {
     {
       id: 'energy',
       title: 'Удержать энергию',
-      desc: 'Energy выше 50 в конце дня',
+      desc: 'Энергия выше 50 в конце дня',
       xp: 15,
       completed: user.energy > 50,
     },
@@ -51,11 +51,11 @@ export default function DailyMissions({ navigate }: NavProps) {
         </button>
 
         <div className="text-[10px] tracking-[0.3em] text-emerald-500 uppercase mb-3">
-          Daily Missions
+          Ежедневные миссии
         </div>
         <h1 className="text-3xl font-bold text-white mb-1">Миссии дня</h1>
         <p className="text-sm text-gray-600 mb-7">
-          {completedCount} из {missions.length} выполнено · {totalXP} XP заработано
+          {completedCount} из {missions.length} выполнено · {totalXP} опыта заработано
         </p>
 
         {/* Progress bar */}
@@ -97,7 +97,7 @@ export default function DailyMissions({ navigate }: NavProps) {
                     m.completed ? 'text-emerald-500' : 'text-gray-600'
                   }`}
                 >
-                  {m.completed ? '+' : ''}{m.xp} XP
+                  {m.completed ? '+' : ''}{m.xp} оп.
                 </div>
               </div>
             </div>
