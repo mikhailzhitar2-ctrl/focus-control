@@ -133,7 +133,7 @@ export default function FocusTimer({ navigate, refresh }: NavProps) {
                       <div className="text-xs text-gray-600 mt-0.5">{d.desc}</div>
                     </div>
                     <div className="text-right text-xs text-gray-600">
-                      <div className="text-emerald-600">+{FOCUS_REWARDS[d.minutes].xp} опыта</div>
+                      <div className="text-emerald-600">+{FOCUS_REWARDS[d.minutes].xp} XP</div>
                       <div>+{FOCUS_REWARDS[d.minutes].energy} энергии</div>
                     </div>
                   </div>

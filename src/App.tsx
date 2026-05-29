@@ -10,6 +10,7 @@ import DailyMissions from './screens/DailyMissions';
 import Analytics from './screens/Analytics';
 import AICoach from './screens/AICoach';
 import CoachExport from './screens/CoachExport';
+import AIChat from './screens/AIChat';
 
 export interface NavProps {
   navigate: (screen: Screen) => void;
@@ -43,6 +44,7 @@ export default function App() {
       {screen === 'analytics' && <Analytics {...props} />}
       {screen === 'ai-coach' && <AICoach {...props} />}
       {screen === 'coach-export' && <CoachExport {...props} />}
+      {screen === 'ai-chat' && <AIChat {...props} />}
     </div>
   );
 }

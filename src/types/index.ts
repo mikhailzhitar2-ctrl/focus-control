@@ -7,7 +7,8 @@ export type Screen =
   | 'daily-missions'
   | 'analytics'
   | 'ai-coach'
-  | 'coach-export';
+  | 'coach-export'
+  | 'ai-chat';
 
 export type ScrollingEstimate = '<1h' | '1-2h' | '2-3h' | '3-5h' | '5+h';
 export type EnergyState = 'charged' | 'normal' | 'tired';

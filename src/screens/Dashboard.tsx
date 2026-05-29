@@ -64,14 +64,14 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
               </span>
               <span className="text-[#222]">·</span>
               <span className="text-xs text-gray-600">
-                Опыт{' '}
+                XP{' '}
                 <span className="text-white font-semibold">{user.xp}</span>
               </span>
             </div>
           </div>
           <div className="text-right">
             <div className={`text-3xl font-bold ${csiColor}`}>{user.csi}</div>
-            <div className="text-[10px] text-gray-600 uppercase tracking-wider mt-0.5">ИКС</div>
+            <div className="text-[10px] text-gray-600 uppercase tracking-wider mt-0.5">CSI</div>
           </div>
         </div>
       </div>
@@ -195,10 +195,10 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
             Аналитика
           </button>
           <button
-            onClick={() => navigate('ai-coach')}
-            className="bg-[#111] border border-[#1a1a1a] hover:border-[#2a2a2a] text-gray-400 rounded-xl py-3 transition-colors text-xs font-medium"
+            onClick={() => navigate('ai-chat')}
+            className="bg-[#111] border border-emerald-900/30 hover:border-emerald-800/50 text-emerald-600 rounded-xl py-3 transition-colors text-xs font-medium"
           >
-            Коуч
+            ИИ Коуч
           </button>
         </div>
 

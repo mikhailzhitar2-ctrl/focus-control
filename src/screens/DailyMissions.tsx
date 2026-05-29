@@ -55,7 +55,7 @@ export default function DailyMissions({ navigate }: NavProps) {
         </div>
         <h1 className="text-3xl font-bold text-white mb-1">Миссии дня</h1>
         <p className="text-sm text-gray-600 mb-7">
-          {completedCount} из {missions.length} выполнено · {totalXP} опыта заработано
+          {completedCount} из {missions.length} выполнено · {totalXP} XP заработано
         </p>
 
         {/* Progress bar */}
@@ -97,7 +97,7 @@ export default function DailyMissions({ navigate }: NavProps) {
                     m.completed ? 'text-emerald-500' : 'text-gray-600'
                   }`}
                 >
-                  {m.completed ? '+' : ''}{m.xp} оп.
+                  {m.completed ? '+' : ''}{m.xp} XP
                 </div>
               </div>
             </div>

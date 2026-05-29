@@ -75,17 +75,13 @@ export default function AICoach({ navigate }: NavProps) {
           ))}
         </div>
 
-        <div className="mt-8 pt-6 border-t border-[#141414]">
-          <p className="text-xs text-gray-700 leading-relaxed">
-            Это правило-ориентированная система. Для персонального разбора нажми{' '}
-            <button
-              onClick={() => navigate('coach-export')}
-              className="text-emerald-700 hover:text-emerald-600 underline transition-colors"
-            >
-              Отправить прогресс коучу
-            </button>
-            {' '}и передай данные наставнику.
-          </p>
+        <div className="mt-6">
+          <button
+            onClick={() => navigate('ai-chat')}
+            className="w-full bg-emerald-800 hover:bg-emerald-700 text-white font-semibold py-4 rounded-xl transition-colors"
+          >
+            Поговорить с ИИ Коучем →
+          </button>
         </div>
       </div>
     </div>
