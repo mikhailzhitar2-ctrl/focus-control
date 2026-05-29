@@ -4,12 +4,12 @@ import { ScrollingEstimate, EnergyState, User } from '../types';
 import { setUser } from '../utils/storage';
 import { scrollingToTime } from '../utils/calculations';
 
-const SCROLLING_OPTIONS: { value: ScrollingEstimate; label: string }[] = [
-  { value: '<1h', label: 'Меньше 1 часа' },
-  { value: '1-2h', label: '1–2 часа' },
-  { value: '2-3h', label: '2–3 часа' },
-  { value: '3-5h', label: '3–5 часов' },
-  { value: '5+h', label: '5+ часов' },
+const SCROLLING_OPTIONS: { value: ScrollingEstimate; label: string; hours: number }[] = [
+  { value: '<1h', label: 'Меньше 1 часа', hours: 0.5 },
+  { value: '1-2h', label: '1–2 часа', hours: 1.5 },
+  { value: '2-3h', label: '2–3 часа', hours: 2.5 },
+  { value: '3-5h', label: '3–5 часов', hours: 4 },
+  { value: '5+h', label: '5+ часов', hours: 6 },
 ];
 
 const ENERGY_OPTIONS: { value: EnergyState; label: string; desc: string; startEnergy: number }[] = [
@@ -18,20 +18,25 @@ const ENERGY_OPTIONS: { value: EnergyState; label: string; desc: string; startEn
   { value: 'tired', label: 'Устал', desc: 'Нужна осторожность', startEnergy: 50 },
 ];
 
+type Step = 'name' | 'scrolling' | 'impact' | 'energy';
+
 export default function Onboarding({ navigate }: NavProps) {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState<Step>('name');
   const [name, setName] = useState('');
-  const [goal, setGoal] = useState('');
   const [scrolling, setScrolling] = useState<ScrollingEstimate | null>(null);
   const [energyState, setEnergyState] = useState<EnergyState | null>(null);
 
+  const handleScrollingSelect = (value: ScrollingEstimate) => {
+    setScrolling(value);
+  };
+
   const handleComplete = () => {
-    if (!name || !goal || !scrolling || !energyState) return;
+    if (!name || !scrolling || !energyState) return;
     const energyOpt = ENERGY_OPTIONS.find((e) => e.value === energyState)!;
     const now = new Date().toISOString();
     const user: User = {
       name: name.trim(),
-      goal: goal.trim(),
+      goal: '',
       scrollingEstimate: scrolling,
       initialEnergy: energyState,
       xp: 0,
@@ -46,66 +51,52 @@ export default function Onboarding({ navigate }: NavProps) {
   };
 
   const timeCalc = scrolling ? scrollingToTime(scrolling) : null;
+  const hours5y = timeCalc ? Math.round(timeCalc.hoursPerMonth * 12 * 5) : 0;
+  const days5y = Math.round(hours5y / 24);
+
+  const stepIndex = { name: 0, scrolling: 1, impact: 1, energy: 2 }[step];
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 animate-fadeIn">
       <div className="w-full max-w-sm">
-        {/* Label */}
         <div className="text-[10px] tracking-[0.35em] text-emerald-500 uppercase mb-3">
           Focus Control
         </div>
 
-        {/* Step 0 — name + goal */}
-        {step === 0 && (
+        {/* ── Step: name ── */}
+        {step === 'name' && (
           <div className="animate-fadeIn">
-            <h1 className="text-3xl font-bold text-white mb-8">Начнем</h1>
-            <div className="space-y-4">
-              <div>
-                <label className="text-xs text-gray-500 uppercase tracking-wider mb-2 block">
-                  Как тебя зовут?
-                </label>
-                <input
-                  autoFocus
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Имя"
-                  className="w-full bg-[#111] border border-[#222] focus:border-emerald-600 rounded-xl px-4 py-3.5 text-white placeholder-gray-700 transition-colors"
-                />
-              </div>
-              <div>
-                <label className="text-xs text-gray-500 uppercase tracking-wider mb-2 block">
-                  Зачем хочешь вернуть фокус?
-                </label>
-                <textarea
-                  value={goal}
-                  onChange={(e) => setGoal(e.target.value)}
-                  placeholder="Моя цель..."
-                  rows={3}
-                  className="w-full bg-[#111] border border-[#222] focus:border-emerald-600 rounded-xl px-4 py-3.5 text-white placeholder-gray-700 transition-colors resize-none"
-                />
-              </div>
-              <button
-                onClick={() => setStep(1)}
-                disabled={!name.trim() || !goal.trim()}
-                className="w-full bg-emerald-700 hover:bg-emerald-600 disabled:bg-[#1a1a1a] disabled:text-gray-600 text-white font-semibold py-4 rounded-xl transition-colors mt-2"
-              >
-                Продолжить
-              </button>
-            </div>
+            <h1 className="text-3xl font-bold text-white mb-2">Привет</h1>
+            <p className="text-sm text-gray-500 mb-7">Как тебя зовут?</p>
+            <input
+              autoFocus
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && name.trim() && setStep('scrolling')}
+              placeholder="Имя"
+              className="w-full bg-[#111] border border-[#222] focus:border-emerald-600 rounded-xl px-4 py-4 text-white placeholder-gray-700 transition-colors text-lg mb-4"
+            />
+            <button
+              onClick={() => setStep('scrolling')}
+              disabled={!name.trim()}
+              className="w-full bg-emerald-700 hover:bg-emerald-600 disabled:bg-[#1a1a1a] disabled:text-gray-600 text-white font-semibold py-4 rounded-xl transition-colors"
+            >
+              Продолжить
+            </button>
           </div>
         )}
 
-        {/* Step 1 — scrolling estimate */}
-        {step === 1 && (
+        {/* ── Step: scrolling ── */}
+        {step === 'scrolling' && (
           <div className="animate-fadeIn">
-            <h1 className="text-3xl font-bold text-white mb-2">Твое время</h1>
-            <p className="text-sm text-gray-500 mb-6">Сколько времени в день уходит на скроллинг?</p>
+            <h1 className="text-3xl font-bold text-white mb-2">Сколько скроллишь?</h1>
+            <p className="text-sm text-gray-500 mb-6">Среднее время в день на телефоне / соцсетях</p>
             <div className="space-y-2">
               {SCROLLING_OPTIONS.map((opt) => (
                 <button
                   key={opt.value}
-                  onClick={() => setScrolling(opt.value)}
+                  onClick={() => handleScrollingSelect(opt.value)}
                   className={`w-full text-left px-4 py-4 rounded-xl border transition-all ${
                     scrolling === opt.value
                       ? 'border-emerald-600 bg-emerald-950/40 text-white'
@@ -116,21 +107,8 @@ export default function Onboarding({ navigate }: NavProps) {
                 </button>
               ))}
             </div>
-
-            {timeCalc && (
-              <div className="mt-4 p-4 bg-[#111] border border-[#1e1e1e] rounded-xl animate-fadeIn">
-                <p className="text-sm text-gray-300 leading-relaxed">
-                  Ты теряешь примерно{' '}
-                  <span className="text-white font-semibold">{timeCalc.hoursPerMonth} часов в месяц</span>
-                  {' / '}
-                  <span className="text-white font-semibold">{timeCalc.daysPerYear} дней в год</span>.{' '}
-                  <span className="text-gray-500">Мы поможем вернуть часть этого времени.</span>
-                </p>
-              </div>
-            )}
-
             <button
-              onClick={() => setStep(2)}
+              onClick={() => setStep('impact')}
               disabled={!scrolling}
               className="w-full bg-emerald-700 hover:bg-emerald-600 disabled:bg-[#1a1a1a] disabled:text-gray-600 text-white font-semibold py-4 rounded-xl transition-colors mt-4"
             >
@@ -139,11 +117,52 @@ export default function Onboarding({ navigate }: NavProps) {
           </div>
         )}
 
-        {/* Step 2 — energy state */}
-        {step === 2 && (
+        {/* ── Step: impact ── */}
+        {step === 'impact' && timeCalc && (
           <div className="animate-fadeIn">
-            <h1 className="text-3xl font-bold text-white mb-2">Состояние</h1>
-            <p className="text-sm text-gray-500 mb-6">Как ты себя чувствуешь прямо сейчас?</p>
+            <div className="text-[10px] tracking-[0.3em] text-red-600 uppercase mb-6">
+              Твоё время
+            </div>
+
+            <div className="space-y-4 mb-8">
+              <div className="bg-[#111] border border-[#1e1e1e] rounded-2xl p-5">
+                <div className="text-gray-500 text-sm mb-1">В год ты тратишь</div>
+                <div className="text-5xl font-bold text-white">{timeCalc.hoursPerMonth * 12}
+                  <span className="text-xl text-gray-500 ml-2">часов</span>
+                </div>
+                <div className="text-xs text-gray-600 mt-1">своей жизни на бесполезный скроллинг</div>
+              </div>
+
+              <div className="bg-[#111] border border-red-900/30 rounded-2xl p-5">
+                <div className="text-gray-500 text-sm mb-1">В масштабе 5 лет</div>
+                <div className="text-5xl font-bold text-red-400">{days5y}
+                  <span className="text-xl text-gray-500 ml-2">дней</span>
+                </div>
+                <div className="text-xs text-gray-600 mt-1">твоей жизни уйдёт в ленту</div>
+              </div>
+
+              <div className="px-4 py-3 rounded-xl border border-emerald-900/30">
+                <p className="text-sm text-emerald-400 leading-relaxed">
+                  Даже вернув <span className="text-white font-semibold">30%</span> этого времени — ты получишь{' '}
+                  <span className="text-white font-semibold">{Math.round(days5y * 0.3)} дней</span> на то, что реально важно.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setStep('energy')}
+              className="w-full bg-emerald-700 hover:bg-emerald-600 text-white font-semibold py-4 rounded-xl transition-colors"
+            >
+              Я хочу вернуть контроль →
+            </button>
+          </div>
+        )}
+
+        {/* ── Step: energy ── */}
+        {step === 'energy' && (
+          <div className="animate-fadeIn">
+            <h1 className="text-3xl font-bold text-white mb-2">Состояние сейчас</h1>
+            <p className="text-sm text-gray-500 mb-6">Это влияет на стартовый уровень энергии</p>
             <div className="space-y-2">
               {ENERGY_OPTIONS.map((opt) => (
                 <button
@@ -176,7 +195,7 @@ export default function Onboarding({ navigate }: NavProps) {
             <div
               key={i}
               className={`rounded-full transition-all ${
-                i === step ? 'w-5 h-1.5 bg-emerald-500' : 'w-1.5 h-1.5 bg-[#2a2a2a]'
+                i === stepIndex ? 'w-5 h-1.5 bg-emerald-500' : 'w-1.5 h-1.5 bg-[#2a2a2a]'
               }`}
             />
           ))}

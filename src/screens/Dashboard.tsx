@@ -84,7 +84,7 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
             <button onClick={() => setShowCSI((v) => !v)} className="text-right">
               <div className={`text-3xl font-bold ${csiColor}`}>{user.csi}</div>
               <div className="text-[10px] text-gray-600 uppercase tracking-wider mt-0.5">
-                CSI <span className="text-gray-700">?</span>
+                Индекс контроля <span className="text-gray-700">?</span>
               </div>
             </button>
             {showCSI && (
