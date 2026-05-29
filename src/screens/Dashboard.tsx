@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { NavProps } from '../App';
 import {
   getUser,
@@ -45,6 +45,17 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
         : 'text-red-400';
 
   const topTip = tips[0];
+  const [showCSI, setShowCSI] = useState(false);
+  const csiRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showCSI) return;
+    const handler = (e: MouseEvent) => {
+      if (csiRef.current && !csiRef.current.contains(e.target as Node)) setShowCSI(false);
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showCSI]);
 
   return (
     <div className="min-h-screen pb-12 animate-fadeIn">
@@ -69,9 +80,45 @@ export default function Dashboard({ navigate, refresh: _refresh }: NavProps) {
               </span>
             </div>
           </div>
-          <div className="text-right">
-            <div className={`text-3xl font-bold ${csiColor}`}>{user.csi}</div>
-            <div className="text-[10px] text-gray-600 uppercase tracking-wider mt-0.5">CSI</div>
+          <div className="text-right relative" ref={csiRef}>
+            <button onClick={() => setShowCSI((v) => !v)} className="text-right">
+              <div className={`text-3xl font-bold ${csiColor}`}>{user.csi}</div>
+              <div className="text-[10px] text-gray-600 uppercase tracking-wider mt-0.5">
+                CSI <span className="text-gray-700">?</span>
+              </div>
+            </button>
+            {showCSI && (
+              <div className="absolute right-0 top-full mt-2 w-64 bg-[#161616] border border-[#2a2a2a] rounded-2xl p-4 z-10 text-left animate-fadeIn shadow-xl">
+                <div className="text-[10px] text-emerald-600 uppercase tracking-wider mb-2">
+                  Cognitive Self-control Index
+                </div>
+                <p className="text-xs text-gray-400 leading-relaxed mb-3">
+                  Индекс когнитивного самоконтроля — показывает, насколько сегодня ты управляешь своим вниманием.
+                </p>
+                <div className="space-y-1.5 text-[11px]">
+                  <div className="flex justify-between text-gray-600">
+                    <span>Фокус-сессии</span><span className="text-emerald-700">+5 за сессию</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Минуты фокуса</span><span className="text-emerald-700">+1 за 5 мин</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Recovery</span><span className="text-emerald-700">+4 за каждый</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Срывы</span><span className="text-red-800">−4 за каждый</span>
+                  </div>
+                  <div className="flex justify-between text-gray-600">
+                    <span>Минуты скроллинга</span><span className="text-red-800">−1 за 5 мин</span>
+                  </div>
+                </div>
+                <div className="mt-3 pt-3 border-t border-[#222] grid grid-cols-3 gap-1 text-center text-[10px]">
+                  <div className="text-red-500">0–39<br/><span className="text-gray-600">Риск</span></div>
+                  <div className="text-yellow-500">40–69<br/><span className="text-gray-600">Норма</span></div>
+                  <div className="text-emerald-500">70–100<br/><span className="text-gray-600">Контроль</span></div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
